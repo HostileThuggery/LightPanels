@@ -1,6 +1,9 @@
 # LightPanels
 C# Windows application for creating light with your spare monitors
 
+Requirements:
+.NET Framework 4
+
 LICENSE
 
 The MIT License (MIT)
