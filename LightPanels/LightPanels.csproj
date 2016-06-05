@@ -90,7 +90,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Release\Release.zip" />
+    <None Include="Release\LightPanels.zip" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

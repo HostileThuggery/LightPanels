@@ -43,6 +43,7 @@
             this.btn_copylabel3colour = new System.Windows.Forms.Button();
             this.tooltip_copypanel = new System.Windows.Forms.ToolTip(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.btn_discomode = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_createlightpanel1
@@ -152,11 +153,22 @@
             this.notifyIcon.Text = "notifyIcon1";
             this.notifyIcon.Visible = true;
             // 
+            // btn_discomode
+            // 
+            this.btn_discomode.Location = new System.Drawing.Point(233, 48);
+            this.btn_discomode.Name = "btn_discomode";
+            this.btn_discomode.Size = new System.Drawing.Size(75, 23);
+            this.btn_discomode.TabIndex = 12;
+            this.btn_discomode.Text = "Disco Mode";
+            this.btn_discomode.UseVisualStyleBackColor = true;
+            this.btn_discomode.Click += new System.EventHandler(this.discobutton_Click);
+            // 
             // LightPanelsMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(313, 182);
+            this.Controls.Add(this.btn_discomode);
             this.Controls.Add(this.btn_copylabel3colour);
             this.Controls.Add(this.btn_copylabel2colour);
             this.Controls.Add(this.btn_copypanel1colour);
@@ -193,6 +205,7 @@
         private System.Windows.Forms.Button btn_copylabel3colour;
         private System.Windows.Forms.ToolTip tooltip_copypanel;
         private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.Button btn_discomode;
     }
 }
 

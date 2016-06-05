@@ -12,8 +12,11 @@ namespace LightPanels
 {
     public partial class LightPanelsMainForm : Form
     {
+        Timer tmr;
+        bool discoenabled = false;
         public static Color selectedcolour;
         LightPanel panel1, panel2, panel3;
+        Random r = new Random();
 
         public LightPanelsMainForm()
         {
@@ -87,6 +90,58 @@ namespace LightPanels
             else
             {
                 MessageBox.Show("No colour selected yet for this lightpanel");
+            }
+        }
+
+        private void discobutton_Click(object sender, EventArgs e)
+        {
+            if (discoenabled == false)
+            {
+                if (MessageBox.Show("This button flashes lights very quickly, use at you your own risk", "Warning", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+
+                    discoenabled = true;
+                    
+
+                    if (panel1 == null || panel1.IsDisposed)
+                    {
+                        panel1 = new LightPanel();
+                    }
+                    if (panel2 == null || panel2.IsDisposed)
+                    {
+                        panel2 = new LightPanel();
+                    }
+                    if (panel3 == null || panel3.IsDisposed)
+                    {
+                        panel3 = new LightPanel();
+                    }
+
+                    if (tmr == null)
+                    {
+                        tmr = new Timer();
+                        tmr.Interval = 100;
+                        tmr.Tick += (o, args) =>
+                        {
+                            var red = r.Next(0, 254);
+                            var blue = r.Next(0, 254);
+                            var green = r.Next(0, 254);
+                            panel1.BackColor = Color.FromArgb(red, green, blue);
+                            panel2.BackColor = Color.FromArgb(red, green, blue);
+                            panel3.BackColor = Color.FromArgb(red, green, blue);
+                            btn_discomode.BackColor = Color.FromArgb(red, green, blue);
+                        };
+                    }
+                    tmr.Enabled = !tmr.Enabled;
+                    panel1.Show();
+                    panel2.Show();
+                    panel3.Show();
+                }
+            }
+            else
+            {
+                tmr.Enabled = !tmr.Enabled;
+                discoenabled = false;
+                return;
             }
         }
 
