@@ -118,6 +118,7 @@ namespace LightPanels
 
                     if (tmr == null)
                     {
+                        // time created for disco mode button
                         tmr = new Timer();
                         tmr.Interval = 100;
                         tmr.Tick += (o, args) =>
