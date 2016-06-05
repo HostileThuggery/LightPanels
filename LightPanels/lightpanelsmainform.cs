@@ -13,10 +13,7 @@ namespace LightPanels
     public partial class LightPanelsMainForm : Form
     {
         public static Color selectedcolour;
-        LightPanel panel1;
-        LightPanel panel2;
-        LightPanel panel3;
-        
+        LightPanel panel1, panel2, panel3;
 
         public LightPanelsMainForm()
         {
@@ -66,7 +63,7 @@ namespace LightPanels
         {
             ColorDialog lightpanelcolourpicker = new ColorDialog();
             lightpanelcolourpicker.FullOpen = true;
-            if (lightpanelcolourpicker.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (lightpanelcolourpicker.ShowDialog() == DialogResult.OK)
             {
                 selectedcolour = lightpanelcolourpicker.Color;
                 textbox_colourpreview.BackColor = lightpanelcolourpicker.Color;
@@ -75,23 +72,9 @@ namespace LightPanels
 
         private void btn_deletealllightpanels_Click(object sender, EventArgs e)
         {
-            if (panel1 != null)
-            {
-                panel1.Close();
-                panel1.Dispose();
-            }
-
-            if (panel2 != null)
-            {
-                panel2.Close();
-                panel2.Dispose();
-            }
-
-            if (panel3 != null)
-            {
-                panel3.Close();
-                panel3.Dispose();
-            }
+            panel1?.Close();
+            panel2?.Close();
+            panel3?.Close();
         }
 
         private void btn_copypanel1colour_Click(object sender, EventArgs e)
@@ -118,7 +101,7 @@ namespace LightPanels
             {
                 MessageBox.Show("No colour selected yet for this lightpanel");
             }
-            
+
         }
 
         private void btn_copylabel3colour_Click(object sender, EventArgs e)

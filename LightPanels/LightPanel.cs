@@ -12,8 +12,6 @@ namespace LightPanels
 {
     public partial class LightPanel : Form
     {
-        public Color currentcolour;
-
         public LightPanel()
         {
             InitializeComponent();            
