@@ -90,6 +90,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Release\LightPanels.zip" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -99,7 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LightPanel_Icon.ico" />
-    <Content Include="Release\LightPanels.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
