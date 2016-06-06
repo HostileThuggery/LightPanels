@@ -17,51 +17,30 @@ namespace LightPanels
         public static Color selectedcolour;
         LightPanel panel1, panel2, panel3;
         Random r = new Random();
-
+        private LightBox selected;
+        private ContextMenu lightBoxMenu = new ContextMenu();
         public LightPanelsMainForm()
         {
             InitializeComponent();
+
+            lightBoxMenu.MenuItems.Add(new MenuItem("Get Colour", GetColour));
+            lightBoxMenu.MenuItems.Add(new MenuItem("Set Colour", SetColour));
+            lightBoxMenu.MenuItems.Add(new MenuItem("Disco?", Disco));
         }
 
-        private void btn_createlightpanel_Click(object sender, EventArgs e)
+        private void GetColour(object sender, EventArgs eventArgs)
         {
-            if (panel1 == null || panel1.IsDisposed)
-            {
-                panel1 = new LightPanel();
-            }
-
-            panel1.BackColor = selectedcolour;
-            panel1.Text = "Panel 1";
-            panel1.Show();
-            btn_copypanel1colour.BackColor = panel1.BackColor;
+            selectedcolour = selected.Colour;
+            textbox_colourpreview.BackColor = selectedcolour;
         }
-
-        private void btn_createlightpanel2_Click(object sender, EventArgs e)
+        private void Disco(object sender, EventArgs eventArgs)
         {
-            if (panel2 == null || panel2.IsDisposed)
-            {
-                panel2 = new LightPanel();
-            }
-
-            panel2.BackColor = selectedcolour;
-            panel2.Text = "Panel 2";
-            panel2.Show();
-            btn_copylabel2colour.BackColor = panel2.BackColor;
+            selected.ToggleDisco();
         }
-
-        private void btn_createlightpanel3_Click(object sender, EventArgs e)
+        private void SetColour(object sender, EventArgs eventArgs)
         {
-            if (panel3 == null || panel3.IsDisposed)
-            {
-                panel3 = new LightPanel();
-            }
-
-            panel3.BackColor = selectedcolour;
-            panel3.Text = "Panel 3";
-            panel3.Show();
-            btn_copylabel3colour.BackColor = panel3.BackColor;
+            selected.Colour = selectedcolour;
         }
-
         private void btn_pickcolour_Click(object sender, EventArgs e)
         {
             ColorDialog lightpanelcolourpicker = new ColorDialog();
@@ -75,9 +54,13 @@ namespace LightPanels
 
         private void btn_deletealllightpanels_Click(object sender, EventArgs e)
         {
-            panel1?.Close();
-            panel2?.Close();
-            panel3?.Close();
+            
+            foreach (var lightBox in LightBoxes.Controls)
+            {
+                ((LightBox) lightBox).Close();
+            }
+            LightBoxes.Controls.Clear();
+            
         }
 
         private void btn_copypanel1colour_Click(object sender, EventArgs e)
@@ -99,51 +82,44 @@ namespace LightPanels
             {
                 if (MessageBox.Show("This button flashes lights very quickly, use at you your own risk", "Warning", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-
                     discoenabled = true;
-                    
-
-                    if (panel1 == null || panel1.IsDisposed)
+                    foreach (var control in LightBoxes.Controls.Cast<object>().Where(control => control.GetType() == typeof (LightBox)))
                     {
-                        panel1 = new LightPanel();
+                        ((LightBox)control).StartDisco();
                     }
-                    if (panel2 == null || panel2.IsDisposed)
-                    {
-                        panel2 = new LightPanel();
-                    }
-                    if (panel3 == null || panel3.IsDisposed)
-                    {
-                        panel3 = new LightPanel();
-                    }
-
-                    if (tmr == null)
-                    {
-                        // time created for disco mode button
-                        tmr = new Timer();
-                        tmr.Interval = 100;
-                        tmr.Tick += (o, args) =>
-                        {
-                            var red = r.Next(0, 254);
-                            var blue = r.Next(0, 254);
-                            var green = r.Next(0, 254);
-                            panel1.BackColor = Color.FromArgb(red, green, blue);
-                            panel2.BackColor = Color.FromArgb(red, green, blue);
-                            panel3.BackColor = Color.FromArgb(red, green, blue);
-                            btn_discomode.BackColor = Color.FromArgb(red, green, blue);
-                        };
-                    }
-                    tmr.Enabled = !tmr.Enabled;
-                    panel1.Show();
-                    panel2.Show();
-                    panel3.Show();
                 }
             }
             else
             {
-                tmr.Enabled = !tmr.Enabled;
                 discoenabled = false;
+                foreach (var control in LightBoxes.Controls.Cast<object>().Where(control => control.GetType() == typeof(LightBox)))
+                {
+                    ((LightBox)control).StopDisco();
+                }
                 return;
             }
+        }
+
+        private void btnNewPanel_Click(object sender, EventArgs e)
+        {
+            LightBox lb = new LightBox();
+            lb.Colour = selectedcolour;
+            lb.OnClick += LbOnOnClick;
+            lb.RIP += Rip;
+            LightBoxes.Controls.Add(lb);
+        }
+
+        private void Rip(object sender, EventArgs eventArgs)
+        {
+            selected = null;
+            LightBoxes.Controls.Remove((LightBox)sender);
+            ((LightBox)sender).Dispose();
+        }
+
+        private void LbOnOnClick(object sender)
+        {
+            selected = (LightBox) sender;
+            lightBoxMenu.Show(selected,new Point(0,0));
         }
 
         private void btn_copylabel2colour_Click(object sender, EventArgs e)

@@ -51,6 +51,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorExtention.cs" />
+    <Compile Include="LightBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LightBox.Designer.cs">
+      <DependentUpon>LightBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="LightPanel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +72,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="LightBox.resx">
+      <DependentUpon>LightBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LightPanel.resx">
       <DependentUpon>LightPanel.cs</DependentUpon>
     </EmbeddedResource>
